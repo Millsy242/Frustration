@@ -217,6 +217,21 @@ namespace sf
         
         return vec;
     }
+    /*
+     * Rotates a vector around a given origin with a given angle in degrees
+     */
+    template <typename T>
+    inline T& rotateAroundOrigin( T& vec,T& origin, double angle )
+    {
+        vec-=origin;
+        const double angleRad = degToRad( -angle );
+        const double newX     = vec.x * cos( angleRad ) - vec.y * sin( angleRad );
+        const double newY     = vec.x * sin( angleRad ) + vec.y * cos( angleRad );
+        vec.x = newX;
+        vec.y = newY;
+        vec+=origin;
+        return vec;
+    }
 }
 
 #endif /* SfMath_hpp */

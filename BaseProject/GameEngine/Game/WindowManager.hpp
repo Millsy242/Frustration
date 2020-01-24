@@ -13,7 +13,7 @@
 #include "Window.hpp"
 #include "Game.hpp"
 #include "Menu.hpp"
-#include "MyGame.hpp"
+#include "Frustration.hpp"
 #include "MyMenu.hpp"
 #include <thread>
 #include "FileLogger.hpp"

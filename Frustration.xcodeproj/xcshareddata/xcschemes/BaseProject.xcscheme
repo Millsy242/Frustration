@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1120"
+   LastUpgradeVersion = "1130"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0B3004C922B53812007515D0"
-               BuildableName = "MyPetridish"
-               BlueprintName = "MyPetridish"
-               ReferencedContainer = "container:BaseProject.xcodeproj">
+               BuildableName = "Frustration"
+               BlueprintName = "Frustration"
+               ReferencedContainer = "container:Frustration.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,9 +31,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B3004C922B53812007515D0"
-            BuildableName = "MyPetridish"
-            BlueprintName = "MyPetridish"
-            ReferencedContainer = "container:BaseProject.xcodeproj">
+            BuildableName = "Frustration"
+            BlueprintName = "Frustration"
+            ReferencedContainer = "container:Frustration.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -45,7 +45,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
-      customWorkingDirectory = "/Users/danielharvey/Programming/MyPetridish/GameEngineSFML/Resources"
+      customWorkingDirectory = "/Users/danielharvey/Programming/Frustration/GameEngineSFML/Resources"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B3004C922B53812007515D0"
-            BuildableName = "MyPetridish"
-            BlueprintName = "MyPetridish"
-            ReferencedContainer = "container:BaseProject.xcodeproj">
+            BuildableName = "Frustration"
+            BlueprintName = "Frustration"
+            ReferencedContainer = "container:Frustration.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B3004C922B53812007515D0"
-            BuildableName = "MyPetridish"
-            BlueprintName = "MyPetridish"
-            ReferencedContainer = "container:BaseProject.xcodeproj">
+            BuildableName = "Frustration"
+            BlueprintName = "Frustration"
+            ReferencedContainer = "container:Frustration.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

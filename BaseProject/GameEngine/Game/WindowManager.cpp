@@ -52,7 +52,7 @@ void WindowManager::ChangeWindow(windowType wt)
         switch (wt)
         {
             case windowType::eGame:
-                currentWindow = std::make_shared<MyGame>(&log,&Settings);
+                currentWindow = std::make_shared<Frustration>(&log,&Settings);
                 log << "Changing to Game";
                 break;
             case windowType::eMenu:

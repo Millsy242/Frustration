@@ -11,11 +11,14 @@
 #include <iostream>
 #include <stdio.h>
 #include "Game.hpp"
-
-class MyGame : public Game
+#include "Piece.hpp"
+#include "Player.hpp"
+#include "Board.hpp"
+#include <array>
+class Frustration : public Game
 {
 public:
-    MyGame(ige::FileLogger *LOG,SettingsManager *SM) ;
+    Frustration(ige::FileLogger *LOG,SettingsManager *SM) ;
     void Start() override;
     void Input(std::queue<sf::Event> &events) override;
     void Render(Window *window) override;
@@ -24,7 +27,14 @@ public:
     void LateUpdate() override;
     
 private:
-    
+    std::array<Piece, 16> pieces;
+    std::array<Player, 4> Players;
+    Frustration_Board board; 
+    int currentPlayer = 0;
+    bool gotonextplayer = false;
+    int roll = 0;
+    int temproll = 0;
+    std::array<sf::Texture,6> diceTextures; 
 };
 
 #endif /* MyGame_hpp */
