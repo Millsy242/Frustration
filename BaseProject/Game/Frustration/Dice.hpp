@@ -17,7 +17,8 @@ public:
     
     unsigned int Roll()
     {
-        return 1+random.i(6);
+       // return 6;
+       return 1+random.i(6);
     }
 private:
     GRand random; 

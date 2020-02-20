@@ -24,7 +24,11 @@ public:
     void SetRolled(bool b);
     void Itsyourturn(); 
     bool AllPiecesNotInPlay();
-    bool getBPIP();
+    bool getBroughtPieceIntoPlay();
+    
+    int numrollsleft = 0;
+    bool needstoChoosePiece = false;
+    bool needstorolldice = false;
     
 private:
     Dice dice;

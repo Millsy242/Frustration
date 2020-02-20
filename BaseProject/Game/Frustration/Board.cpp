@@ -113,7 +113,7 @@ bool Frustration_Board::TryMovePiece(Piece *p, int diceroll)
         bool R{0},G{0},B{0},Y{0};
         int oldslotnum = 0;
 
-        if(dist >= 0 && dist <= 28)
+        if(dist >= 0 && dist <= GameBoardSlots.size())
         {
             for(int i{0}; i<GameBoardSlots.size();i++)
             {

@@ -58,6 +58,8 @@ void Frustration::Start()
     Players[2] = green;
     Players[3] = yellow;
     
+    Players[0].Itsyourturn();
+    
     board.GivePieces(&pieces);
     board.Setup(7, 4, 4,{500,500});
     
@@ -68,58 +70,66 @@ void Frustration::Input(std::queue<sf::Event> &events)
     ImGui::Begin("Dice");
     ImGui::Text("Current Player %i",currentPlayer);
     
+    ImGuiWindowFlags window_flags = 0;
+    window_flags |= ImGuiWindowFlags_NoMove;
+    window_flags |= ImGuiWindowFlags_NoResize;
+    window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+    window_flags |= ImGuiWindowFlags_NoBackground;
+    window_flags |= ImGuiWindowFlags_NoNav;
+    //window_flags |= ImGuiWindowFlags_NoInputs;
+    window_flags |= ImGuiWindowFlags_NoCollapse;
+    window_flags |= ImGuiWindowFlags_NoNavFocus;
+    window_flags |= ImGuiWindowFlags_NoTitleBar;
+    ImGui::SetNextWindowPos({500-64,500-64});
+    ImGui::Begin("DiceRoll",NULL,window_flags);
     
-        ImGuiWindowFlags window_flags = 0;
-        window_flags |= ImGuiWindowFlags_NoMove;
-        window_flags |= ImGuiWindowFlags_NoResize;
-        window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
-        window_flags |= ImGuiWindowFlags_NoBackground;
-        window_flags |= ImGuiWindowFlags_NoNav;
-        //window_flags |= ImGuiWindowFlags_NoInputs;
-        window_flags |= ImGuiWindowFlags_NoCollapse;
-        window_flags |= ImGuiWindowFlags_NoNavFocus;
-        window_flags |= ImGuiWindowFlags_NoTitleBar;
-        ImGui::SetNextWindowPos({500-64,500-64});
-        ImGui::Begin("DiceRoll",NULL,window_flags);
-       
-        if(temproll < 0)
-            temproll = 0;
-        if(ImGui::ImageButton(diceTextures[temproll], {128,128}))
+    auto nextPlayer = [&]()
+    {
+        currentPlayer++;
+        if(currentPlayer == 4)
+            currentPlayer = 0;
+        
+        gotonextplayer = false;
+         Players[currentPlayer].Itsyourturn();
+        
+        roll = 0;
+    };
+   
+    if(temproll < 0)
+        temproll = 0;
+    if(ImGui::ImageButton(diceTextures[temproll], {128,128}))
         {
-            if(!Players[currentPlayer].GetRolled())
+            if(Players[currentPlayer].needstorolldice && !Players[currentPlayer].needstoChoosePiece)
             {
                 roll = Players[currentPlayer].RollDice();
-                if(roll != 6 && Players[currentPlayer].AllPiecesNotInPlay())
-                    gotonextplayer = true;
+
                 Players[currentPlayer].SetRolled(true);
+                
+                temproll = roll -1;
             }
         }
            ImGui::End();
-    if(Players[currentPlayer].GetRolled())
+    if(Players[currentPlayer].needstoChoosePiece)
     {
         if(ImGui::Button("1")) gotonextplayer = Players[currentPlayer].ChoosePiece(0);
         if(ImGui::Button("2")) gotonextplayer = Players[currentPlayer].ChoosePiece(1);
         if(ImGui::Button("3")) gotonextplayer = Players[currentPlayer].ChoosePiece(2);
         if(ImGui::Button("4")) gotonextplayer = Players[currentPlayer].ChoosePiece(3);
         
-        
-        
         if(ImGui::Button("NextPlayer") || gotonextplayer)
         {
             Players[currentPlayer].SetRolled(false);
-            if(!Players[currentPlayer].getBPIP())
+            if(!Players[currentPlayer].needstoChoosePiece && !Players[currentPlayer].needstorolldice)
             {
-                currentPlayer++;
-                if(currentPlayer == 4)
-                    currentPlayer = 0;
-                
-                gotonextplayer = false;
+                nextPlayer();
             }
-             temproll = roll -1;
-            roll = 0;
-            Players[currentPlayer].Itsyourturn(); 
         }
+        
     }
+    else if ( !Players[currentPlayer].needstorolldice)
+        nextPlayer();
+   
+    
     ImGui::End();
     if(roll > 0)
     {
@@ -127,11 +137,14 @@ void Frustration::Input(std::queue<sf::Event> &events)
         ImGui::Text("Player %i rolled a %i", currentPlayer, roll);
         ImGui::End();
     }
+    
+    
+
 }
 void Frustration::Render(Window *window)
 {
     *log << "Game Render";
-    window->BeginDraw(sf::Color(20,55,34));
+    window->BeginDraw(sf::Color(0,50,50));
     board.Render(window);
     for(int i {0}; i<pieces.size(); i++)
     {
@@ -154,3 +167,99 @@ void Frustration::LateUpdate()
 {
     *log << "Game Late Update";
 }
+/*
+ if(temproll < 0)
+            temproll = 0;
+        if(ImGui::ImageButton(diceTextures[temproll], {128,128}))
+        {
+            if(!Players[currentPlayer].GetRolled())
+            {
+                roll = Players[currentPlayer].RollDice();
+                if(roll != 6 && Players[currentPlayer].AllPiecesNotInPlay())
+                {
+                    gotonextplayer = true;
+                }
+                Players[currentPlayer].SetRolled(true);
+                
+                temproll = roll -1;
+            }
+        }
+           ImGui::End();
+    if(Players[currentPlayer].GetRolled() )
+    {
+        if(ImGui::Button("1")) gotonextplayer = Players[currentPlayer].ChoosePiece(0);
+        if(ImGui::Button("2")) gotonextplayer = Players[currentPlayer].ChoosePiece(1);
+        if(ImGui::Button("3")) gotonextplayer = Players[currentPlayer].ChoosePiece(2);
+        if(ImGui::Button("4")) gotonextplayer = Players[currentPlayer].ChoosePiece(3);
+        
+        if(ImGui::Button("NextPlayer") || gotonextplayer)
+        {
+            Players[currentPlayer].SetRolled(false);
+            if(!Players[currentPlayer].getBroughtPieceIntoPlay())
+            {
+                currentPlayer++;
+                if(currentPlayer == 4)
+                    currentPlayer = 0;
+                
+                gotonextplayer = false;
+            }
+             
+            roll = 0;
+            Players[currentPlayer].Itsyourturn();
+        }
+    }
+    ImGui::End();
+    if(roll > 0)
+    {
+        ImGui::Begin("Dice");
+        ImGui::Text("Player %i rolled a %i", currentPlayer, roll);
+        ImGui::End();
+    }
+ */
+/*
+ if(temproll < 0)
+        temproll = 0;
+    if(ImGui::ImageButton(diceTextures[temproll], {128,128}))
+    {
+        if(Players[currentPlayer].numrollsleft == 1)
+        {
+            roll = Players[currentPlayer].RollDice();
+            if(Players[currentPlayer].numrollsleft == 0)
+            {
+                gotonextplayer = true;
+            }
+            Players[currentPlayer].SetRolled(true);
+            
+            temproll = roll -1;
+        }
+    }
+    ImGui::End();
+    if(Players[currentPlayer].GetRolled())
+    {
+        if(ImGui::Button("1")) gotonextplayer = Players[currentPlayer].ChoosePiece(0);
+        if(ImGui::Button("2")) gotonextplayer = Players[currentPlayer].ChoosePiece(1);
+        if(ImGui::Button("3")) gotonextplayer = Players[currentPlayer].ChoosePiece(2);
+        if(ImGui::Button("4")) gotonextplayer = Players[currentPlayer].ChoosePiece(3);
+        
+        if(ImGui::Button("NextPlayer") || gotonextplayer)
+        {
+            Players[currentPlayer].SetRolled(false);
+            if(Players[currentPlayer].numrollsleft == 0)
+            {
+                currentPlayer++;
+                if(currentPlayer == 4)
+                    currentPlayer = 0;
+            }
+             gotonextplayer = false;
+            roll = 0;
+            Players[currentPlayer].Itsyourturn();
+        }
+    }
+    ImGui::End();
+    if(roll > 0)
+    {
+        ImGui::Begin("Dice");
+        ImGui::Text("Player %i rolled a %i", currentPlayer, roll);
+        ImGui::End();
+    }
+ */

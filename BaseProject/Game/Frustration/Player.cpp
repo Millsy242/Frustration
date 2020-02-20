@@ -16,10 +16,7 @@ Player::Player()
 }
 Player::~Player()
 {
- //   delete[] Piece_1;
-  //  delete[] Piece_2;
-   // delete[] Piece_3;
-   // delete[] Piece_4;
+
 };
 bool Player::ChoosePiece(unsigned int choice)
 {
@@ -47,28 +44,37 @@ bool Player::ChoosePiece(unsigned int choice)
                 break;
         }
         if(Piece_1->RecentlyInplay || Piece_2->RecentlyInplay || Piece_3->RecentlyInplay || Piece_4->RecentlyInplay)
+        {
             BroughtPieceIntoPlay = true;
+            needstorolldice = true;
+            
+            
+            Piece_1->RecentlyInplay = Piece_2->RecentlyInplay = Piece_3->RecentlyInplay = Piece_4->RecentlyInplay = false;
+        }
     }
     else
     {
         std::cout<<"ERROR chosen Piece does not exist\n";
     }
     
-        
-    return SUCCESS; 
+    needstoChoosePiece = !SUCCESS;
+    
+    return SUCCESS;
 }
 void Player::Itsyourturn()
 {
     BroughtPieceIntoPlay = Piece_1->RecentlyInplay = Piece_2->RecentlyInplay = Piece_3->RecentlyInplay = Piece_4->RecentlyInplay = false;
+    numrollsleft = 1;
+    needstorolldice = true;
 }
-bool Player::getBPIP()
+bool Player::getBroughtPieceIntoPlay()
 {
     return BroughtPieceIntoPlay;
 }
 bool Player::AllPiecesNotInPlay()
 {
     //return the opposite of if(all pieces are in play)
-    return !(Piece_1->inPlay && Piece_2->inPlay && Piece_3->inPlay && Piece_4->inPlay);
+    return !(Piece_1->inPlay || Piece_2->inPlay || Piece_3->inPlay || Piece_4->inPlay);
 }
 bool Player::GetRolled()
 {
@@ -81,6 +87,18 @@ void Player::SetRolled(bool b)
 int Player::RollDice()
 {
     lastDiceRoll = dice.Roll();
+    
+    needstorolldice = false;
+    if(lastDiceRoll == 6)
+    {
+        needstoChoosePiece = true;
+        needstorolldice = true;
+    }
+    else if (!AllPiecesNotInPlay())
+        needstoChoosePiece = true;
+    else
+        needstoChoosePiece = false;
+
     
     //Return the dice roll result to show the players
     return lastDiceRoll;
