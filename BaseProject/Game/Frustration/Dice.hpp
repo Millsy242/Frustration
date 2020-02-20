@@ -20,7 +20,7 @@ public:
        // return 6;
        return 1+random.i(6);
     }
-private:
+private: 
     GRand random; 
 };
 #endif /* Dice_hpp */

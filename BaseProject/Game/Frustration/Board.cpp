@@ -105,7 +105,7 @@ bool Frustration_Board::TryMovePiece(Piece *p, int diceroll)
                 }
             }
         }
-    }
+    } 
     else
     {
         std::cout<<"piece is in play\n";

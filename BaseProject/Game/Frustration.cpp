@@ -94,7 +94,7 @@ void Frustration::Input(std::queue<sf::Event> &events)
         
         roll = 0;
     };
-   
+    
     if(temproll < 0)
         temproll = 0;
     if(ImGui::ImageButton(diceTextures[temproll], {128,128}))

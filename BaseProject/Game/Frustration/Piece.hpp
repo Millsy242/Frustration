@@ -14,7 +14,7 @@ enum PieceColour : int
     PT_red = 0, PT_green = 1, PT_blue = 2, PT_yellow = 3
 };
 class Piece
-{
+{ 
 public:
     Piece();
     ~Piece(){};

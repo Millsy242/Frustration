@@ -45,7 +45,7 @@ bool Player::ChoosePiece(unsigned int choice)
         }
         if(Piece_1->RecentlyInplay || Piece_2->RecentlyInplay || Piece_3->RecentlyInplay || Piece_4->RecentlyInplay)
         {
-            BroughtPieceIntoPlay = true;
+            BroughtPieceIntoPlay = true; 
             needstorolldice = true;
             
             

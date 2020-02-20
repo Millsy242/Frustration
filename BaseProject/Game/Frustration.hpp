@@ -16,7 +16,7 @@
 #include "Board.hpp"
 #include <array>
 class Frustration : public Game
-{
+{ 
 public:
     Frustration(ige::FileLogger *LOG,SettingsManager *SM) ;
     void Start() override;

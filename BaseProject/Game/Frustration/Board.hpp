@@ -13,7 +13,7 @@
 #include "Piece.hpp"
 #include <vector>
 struct Slot
-{
+{ 
 public:
     unsigned int currentPiece = -1;
     unsigned int DistanceToEnd_R = 0;

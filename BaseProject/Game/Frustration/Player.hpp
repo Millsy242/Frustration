@@ -19,7 +19,7 @@ public:
     ~Player();
     void Setup(Piece* P1, Piece* P2, Piece* P3, Piece* P4, Frustration_Board *b);
     bool ChoosePiece(unsigned int choice);
-    int RollDice();
+    int RollDice(); 
     bool GetRolled();
     void SetRolled(bool b);
     void Itsyourturn(); 

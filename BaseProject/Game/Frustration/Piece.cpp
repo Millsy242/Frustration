@@ -19,7 +19,7 @@ void Piece::Setup(PieceColour pt, int vp)
     switch (pt)
     {
         case PT_red:
-            Colour = sf::Color::Red;
+            Colour = sf::Color::Red; 
             break;
         case PT_green:
             Colour = sf::Color(0,128,0);
